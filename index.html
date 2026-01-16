@@ -1,193 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>Feed The Worm Noory 💜</title>
 
 <style>
-:root{
-  --deep1:#070010;
-  --deep2:#220022;
-  --deep3:#3a0032;
-  --deep4:#001b3a;
-  --rose:#ff74b8;
-  --lav:#a78bff;
-  --blue:#78b3ff;
-  --text:#ffd9eb;
-  --muted:#f2a7c4;
-}
+  :root{
+    --deep1:#06000f;
+    --deep2:#1f0024;
+    --deep3:#3b0032;
+    --deep4:#001a3a;
+    --rose:#ff74b8;
+    --lav:#a78bff;
+    --blue:#78b3ff;
+    --text:#ffd9eb;
+    --muted:#f2a7c4;
+    --glass: rgba(255,255,255,0.085);
+    --border: rgba(255,255,255,0.14);
+    --shadow: rgba(0,0,0,0.48);
+  }
 
-*{box-sizing:border-box}
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; color:var(--text); font-family: Georgia, serif; background:#000; overflow-x:hidden; }
 
-html,body{
-  margin:0;
-  padding:0;
-  font-family: Georgia, serif;
-  background:#000;
-  color:var(--text);
-  overflow-x:hidden;
-}
+  /* Deep romantic animated background */
+  body{
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,116,184,.18), transparent 45%),
+      radial-gradient(circle at 80% 75%, rgba(167,139,255,.16), transparent 45%),
+      radial-gradient(circle at 55% 35%, rgba(120,179,255,.12), transparent 50%),
+      conic-gradient(from 180deg, rgba(255,116,184,.14), rgba(120,179,255,.10), rgba(167,139,255,.12), rgba(255,116,184,.14)),
+      linear-gradient(135deg, var(--deep3), var(--deep1), var(--deep4));
+    background-size: 170% 170%;
+    animation: breathe 18s ease-in-out infinite;
+  }
+  @keyframes breathe{
+    0%{ background-position:10% 20%; filter:saturate(1.05); }
+    50%{ background-position:90% 80%; filter:saturate(1.20); }
+    100%{ background-position:10% 20%; filter:saturate(1.05); }
+  }
 
-/* ===== BACKGROUND ===== */
-.bg{
-  background:
-    radial-gradient(circle at 15% 20%, rgba(255,116,184,.18), transparent 45%),
-    radial-gradient(circle at 80% 75%, rgba(167,139,255,.16), transparent 45%),
-    radial-gradient(circle at 55% 35%, rgba(120,179,255,.12), transparent 50%),
-    conic-gradient(from 180deg, rgba(255,116,184,.14), rgba(120,179,255,.10), rgba(167,139,255,.12), rgba(255,116,184,.14)),
-    linear-gradient(135deg, var(--deep3), var(--deep1), var(--deep4));
-  background-size: 170% 170%;
-  animation: breathe 18s ease-in-out infinite;
-}
+  .view{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:22px;
+  }
+  .hidden{ display:none !important; }
 
-@keyframes breathe{
-  0%{background-position:10% 20%}
-  50%{background-position:90% 80%}
-  100%{background-position:10% 20%}
-}
+  .fadeIn{ animation: fadeIn 600ms ease both; }
+  .fadeOut{ animation: fadeOut 600ms ease both; }
+  @keyframes fadeIn{
+    from{ opacity:0; transform: translateY(10px) scale(.985); filter: blur(8px); }
+    to{ opacity:1; transform: translateY(0) scale(1); filter: blur(0); }
+  }
+  @keyframes fadeOut{
+    from{ opacity:1; }
+    to{ opacity:0; transform: translateY(-6px) scale(.992); filter: blur(10px); }
+  }
 
-/* ===== OVERLAY ===== */
-#startOverlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-#startOverlay div{
-  padding:22px 30px;
-  border-radius:20px;
-  background:rgba(255,255,255,.12);
-  backdrop-filter:blur(12px);
-  font-size:1.2rem;
-}
+  .card{
+    width:min(640px, 100%);
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 16px;
+    box-shadow: 0 16px 42px var(--shadow);
+    backdrop-filter: blur(14px);
+  }
 
-/* ===== VIEWS ===== */
-.view{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:24px;
-}
-.hidden{display:none}
+  h1,h2{ margin:0; }
+  .muted{ color:var(--muted); }
 
-.fadeIn{animation:fadeIn .6s ease both}
-.fadeOut{animation:fadeOut .6s ease both}
+  .topRow{
+    display:flex;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:10px;
+  }
+  .title{
+    font-size: 1.55rem;
+    letter-spacing: .6px;
+  }
+  .desc{
+    margin:8px 0 0 0;
+    line-height:1.5;
+    font-size: .98rem;
+    color: var(--muted);
+  }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:scale(.97); filter:blur(6px)}
-  to{opacity:1; transform:none; filter:none}
-}
-@keyframes fadeOut{
-  from{opacity:1}
-  to{opacity:0; transform:scale(.98); filter:blur(6px)}
-}
+  .pill{
+    display:inline-block;
+    padding:7px 12px;
+    border-radius:999px;
+    background: rgba(0,0,0,0.26);
+    border: 1px solid rgba(255,255,255,0.16);
+    font-size:.95rem;
+    text-align:right;
+  }
 
-/* ===== GAME ===== */
-.card{
-  width:min(580px,100%);
-  background:rgba(255,255,255,.08);
-  border-radius:22px;
-  padding:16px;
-  backdrop-filter:blur(14px);
-}
+  .stats{
+    text-align:right;
+    font-size:.98rem;
+    line-height:1.35;
+    white-space:nowrap;
+  }
 
-canvas{
-  width:100%;
-  background:rgba(0,0,0,.35);
-  border-radius:16px;
-  margin-top:12px;
-}
+  .progressWrap{
+    margin-top:10px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.12);
+    overflow:hidden;
+  }
+  .progressBar{
+    height:100%;
+    width:0%;
+    background: linear-gradient(90deg, rgba(255,116,184,0.9), rgba(167,139,255,0.9), rgba(120,179,255,0.9));
+    transition: width 420ms ease;
+    border-radius: 999px;
+  }
 
-.controls{
-  display:flex;
-  justify-content:space-between;
-  margin-top:12px;
-}
+  canvas{
+    width:100%;
+    height:auto;
+    border-radius: 16px;
+    margin-top:12px;
+    background:
+      radial-gradient(circle at center, rgba(255,255,255,0.06), rgba(0,0,0,0.42));
+    border: 1px solid rgba(255,255,255,0.10);
+    touch-action: none; /* important for swipe */
+    display:block;
+  }
 
-button{
-  padding:10px 16px;
-  border-radius:14px;
-  border:none;
-  background:rgba(255,255,255,.15);
-  color:var(--text);
-  font-size:1rem;
-}
+  .controls{
+    margin-top:12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+  }
 
-/* ===== TRANSITION ===== */
-.center{
-  text-align:center;
-}
-.center h1{
-  font-size:3rem;
-}
+  .btn{
+    border:none;
+    padding:10px 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: var(--text);
+    cursor:pointer;
+    font-size: 1rem;
+    transition: transform 120ms ease, background 220ms ease;
+  }
+  .btn:hover{ background: rgba(255,255,255,0.16); }
+  .btn:active{ transform: scale(0.98); }
 
-/* ===== POEM ===== */
-.poem h1{
-  margin-bottom:40px;
-}
-.line{
-  opacity:0;
-  transform:translateY(24px);
-  transition:1.3s;
-  margin:18px 0;
-  font-size:1.4rem;
-}
-.line.show{
-  opacity:1;
-  transform:none;
-}
+  .btnRow{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:14px;
+  }
 
-/* ===== FINAL ===== */
-.forever{
-  animation:forever 9s ease-in-out infinite;
-}
-@keyframes forever{
-  0%{text-shadow:0 0 20px rgba(255,116,184,.2)}
-  50%{text-shadow:0 0 45px rgba(167,139,255,.3)}
-  100%{text-shadow:0 0 20px rgba(255,116,184,.2)}
-}
+  .note{
+    margin-top:10px;
+    min-height:1.2em;
+    color: var(--muted);
+    font-size:.95rem;
+  }
+
+  /* Overlay modal (tap to begin / instructions / game over / countdown) */
+  .overlay{
+    position:fixed;
+    inset:0;
+    background: rgba(0,0,0,0.60);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    z-index:9999;
+  }
+  .overlayCard{
+    width:min(680px, 100%);
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 22px;
+    padding: 18px 16px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.55);
+    animation: popIn 650ms ease both;
+  }
+  @keyframes popIn{
+    from{ opacity:0; transform: translateY(10px) scale(.985); filter: blur(10px); }
+    to{ opacity:1; transform: translateY(0) scale(1); filter: blur(0); }
+  }
+  .overlayTitle{
+    font-size: 1.7rem;
+    letter-spacing: .6px;
+  }
+  .overlayText{
+    margin:10px 0 0 0;
+    color: var(--muted);
+    line-height:1.55;
+    font-size:1.02rem;
+  }
+  .overlayBig{
+    font-size: 3.2rem;
+    text-align:center;
+    margin: 10px 0;
+  }
+  .smallHint{
+    font-size:.95rem;
+    color: var(--muted);
+    margin-top:10px;
+  }
+
+  /* Flower gif page */
+  .flowerWrap{
+    text-align:center;
+  }
+  .flowerGif{
+    width:min(680px, 100%);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.55);
+    image-rendering: pixelated;
+  }
+
+  /* Poem */
+  .poemWrap{
+    width:min(900px, 100%);
+  }
+  .poemWrap h1{
+    text-align:center;
+    margin:0 0 42px 0;
+    font-size: 3rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 26px rgba(255,116,184,0.12);
+  }
+  .line{
+    font-size: 1.45rem;
+    line-height: 1.85;
+    max-width: 820px;
+    margin: 18px auto;
+    opacity:0;
+    transform: translateY(22px);
+    transition: opacity 1.35s ease, transform 1.35s ease;
+  }
+  .line.show{ opacity:1; transform: translateY(0); }
+
+  /* Final */
+  .foreverGlow{
+    animation: forever 9s ease-in-out infinite;
+    text-align:center;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    letter-spacing: 1px;
+  }
+  @keyframes forever{
+    0%{ text-shadow: 0 0 20px rgba(255,116,184,.18); }
+    50%{ text-shadow: 0 0 40px rgba(167,139,255,.28); }
+    100%{ text-shadow: 0 0 20px rgba(255,116,184,.18); }
+  }
+
+  @media (max-width: 420px){
+    .poemWrap h1{ font-size: 2.5rem; }
+    .line{ font-size: 1.25rem; }
+  }
 </style>
 </head>
 
-<body class="bg">
+<body>
 
 <!-- AUDIO -->
-<audio id="music" src="music.mp3" loop></audio>
-<audio id="sndHeart" src="heart.mp3"></audio>
-<audio id="sndFlower" src="flower.mp3"></audio>
-<audio id="sndBomb" src="bomb.mp3"></audio>
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+<audio id="sndHeart"><source src="heart.mp3" type="audio/mpeg"></audio>
+<audio id="sndFlower"><source src="flower.mp3" type="audio/mpeg"></audio>
+<audio id="sndBomb"><source src="bomb.mp3" type="audio/mpeg"></audio>
 
 <!-- START OVERLAY -->
-<div id="startOverlay"><div>tap anywhere to begin 💜</div></div>
+<div id="startOverlay" class="overlay">
+  <div class="overlayCard">
+    <div class="overlayTitle">Feed The Worm Noory 🪱💜</div>
+    <p class="overlayText">
+      This is a little love game made for you.<br>
+      When you tap <b>Begin</b>, the music will start and you control the worm.
+    </p>
+    <p class="smallHint">
+      Controls: <b>Swipe</b> on phone • <b>Arrow keys</b> on laptop.
+    </p>
+    <div class="btnRow">
+      <button class="btn" id="beginBtn">Begin 💜</button>
+    </div>
+  </div>
+</div>
 
-<!-- GAME -->
-<section id="gameView" class="view">
+<!-- GAME VIEW -->
+<section id="gameView" class="view fadeIn">
   <div class="card">
-    <h2>Feed The Worm Noory 🪱💜</h2>
+    <div class="topRow">
+      <div>
+        <div class="title">Feed The Worm Noory 🪱💜</div>
+        <div class="desc" id="stageDesc"></div>
+      </div>
+      <div class="stats">
+        <div>Collected: <b id="collected">0</b></div>
+        <div>Target: <b id="target">0</b></div>
+        <div class="pill" id="statusPill">Paused</div>
+      </div>
+    </div>
+
+    <div class="progressWrap">
+      <div class="progressBar" id="progress"></div>
+    </div>
+
     <canvas id="game" width="480" height="480"></canvas>
+
     <div class="controls">
-      <button id="startBtn">Start</button>
-      <button id="restartBtn">Restart</button>
+      <button class="btn" id="pauseBtn">Start</button>
+      <button class="btn" id="restartBtn">Restart Stage</button>
+      <button class="btn" id="continueBtn" disabled style="opacity:.55; cursor:not-allowed;">Continue ➜</button>
+    </div>
+
+    <div class="note" id="note"></div>
+  </div>
+</section>
+
+<!-- STAGE 1 COMPLETE -> NEXT STAGE SELECT -->
+<section id="stage1WinView" class="view hidden">
+  <div class="card fadeIn">
+    <h2>You did good 💜</h2>
+    <p class="muted" style="line-height:1.6; margin-top:10px;">
+      You finished stage 1. When you’re ready, tap to choose the next stage.
+    </p>
+    <div class="btnRow">
+      <button class="btn" id="backToGame1Btn">⬅ Back</button>
+      <button class="btn" id="goStageSelectBtn">Choose next stage ➜</button>
     </div>
   </div>
 </section>
 
-<!-- TRANSITION -->
-<section id="transitionView" class="view hidden">
-  <div class="center fadeIn">
-    <h1>I love you Noory<br>Mwahhh 💋</h1>
+<section id="stageSelectView" class="view hidden">
+  <div class="card fadeIn">
+    <h2>Next stage 💜</h2>
+    <p class="muted" style="line-height:1.6; margin-top:10px;">
+      Stage 2 is harder. You must collect <b>7</b> (❤️ + 🌸) and avoid <b>6</b> bombs 💣.
+    </p>
+    <div class="btnRow">
+      <button class="btn" id="backToWinBtn">⬅ Back</button>
+      <button class="btn" id="startStage2Btn">Start Stage 2 ➜</button>
+    </div>
   </div>
 </section>
 
-<!-- POEM -->
+<section id="stage2WinView" class="view hidden">
+  <div class="card fadeIn">
+    <h2>You did amazing 💜</h2>
+    <p class="muted" style="line-height:1.6; margin-top:10px;">
+      Stage 2 complete. When you’re ready, continue to the final stage.
+    </p>
+    <div class="btnRow">
+      <button class="btn" id="backToStage2Btn">⬅ Back</button>
+      <button class="btn" id="startStage3Btn">Continue ➜</button>
+    </div>
+  </div>
+</section>
+
+<!-- FLOWERS GIF VIEW (before poem) -->
+<section id="flowersView" class="view hidden">
+  <div class="flowerWrap fadeIn">
+    <h2 style="margin-bottom:14px;">💜</h2>
+    <img class="flowerGif" src="flowers.gif" alt="Flowers" />
+    <p class="muted" style="margin-top:14px; line-height:1.6;">
+      Tap when you’re ready.
+    </p>
+    <div class="btnRow" style="justify-content:center;">
+      <button class="btn" id="flowersContinueBtn">Continue ➜</button>
+    </div>
+  </div>
+</section>
+
+<!-- POEM VIEW -->
 <section id="poemView" class="view hidden">
-  <div class="poem">
+  <div class="poemWrap fadeIn">
     <h1>My Rose</h1>
+
+    <!-- poem with typo fixes only -->
     <div class="line">I pick you from the fields, I smell you and I smile.</div>
     <div class="line">Your scent is awakening and strong, and it never ceases to make me smile.</div>
     <div class="line">I love the thorn that adorns your stem.</div>
@@ -196,95 +400,633 @@ button{
     <div class="line">I love you more than anything.</div>
     <div class="line">I will care for you and watch you grow.</div>
     <div class="line">Your mighty beauty is all I ever want to know and all I admire, more than the rarest treasures and gold.</div>
+
+    <div class="btnRow" style="margin-top:26px;">
+      <button class="btn" id="poemBackBtn">⬅ Back</button>
+      <button class="btn" id="poemContinueBtn">Continue ➜</button>
+    </div>
   </div>
 </section>
 
-<!-- FINAL -->
+<!-- FINAL VIEW -->
 <section id="finalView" class="view hidden">
-  <div class="center">
-    <h1 class="forever">❤️Maahnoor❤️Gavin❤️forever❤️</h1>
+  <div class="card fadeIn" style="text-align:center;">
+    <div class="foreverGlow">❤️Maahnoor❤️Gavin❤️forever❤️</div>
+    <p class="muted" style="margin-top:14px;">always.</p>
+    <div class="btnRow" style="justify-content:center;">
+      <button class="btn" id="finalBackBtn">⬅ Back</button>
+      <button class="btn" id="finalRestartBtn">Restart experience</button>
+    </div>
   </div>
 </section>
+
+<!-- GAME MODAL OVERLAY (instructions, gameover, countdown) -->
+<div id="gameModal" class="overlay hidden">
+  <div class="overlayCard">
+    <div class="overlayTitle" id="modalTitle"></div>
+    <p class="overlayText" id="modalText"></p>
+    <div id="modalBig" class="overlayBig hidden"></div>
+    <p class="smallHint" id="modalHint"></p>
+    <div class="btnRow" id="modalButtons"></div>
+  </div>
+</div>
 
 <script>
-/* ===== AUDIO ===== */
-const music=document.getElementById("music");
-let musicStarted=false;
+/* =========================
+   Helpers
+   ========================= */
+const $ = (id) => document.getElementById(id);
+
+function switchView(fromEl, toEl){
+  if (!fromEl || !toEl) return;
+  fromEl.classList.add("fadeOut");
+  setTimeout(()=>{
+    fromEl.classList.add("hidden");
+    fromEl.classList.remove("fadeOut");
+    toEl.classList.remove("hidden");
+    toEl.classList.add("fadeIn");
+    setTimeout(()=>toEl.classList.remove("fadeIn"), 700);
+  }, 600);
+}
+
+/* =========================
+   Audio
+   ========================= */
+const music = $("music");
+const sndHeart = $("sndHeart");
+const sndFlower = $("sndFlower");
+const sndBomb = $("sndBomb");
+
+let musicStarted = false;
+
+function safePlay(audio){
+  try { audio.currentTime = 0; } catch {}
+  audio.play().catch(()=>{});
+}
+
 function startMusic(){
-  if(musicStarted)return;
-  musicStarted=true;
-  music.volume=0;
-  music.play();
-  let f=setInterval(()=>{music.volume+=.02;if(music.volume>=.35)clearInterval(f)},200);
+  if (musicStarted) return;
+  musicStarted = true;
+  music.volume = 0;
+  music.play().catch(()=>{});
+  const fade = setInterval(()=>{
+    if (music.volume < 0.35) music.volume = Math.min(0.35, music.volume + 0.02);
+    else clearInterval(fade);
+  }, 180);
 }
 
-/* ===== OVERLAY ===== */
-document.getElementById("startOverlay").onclick=()=>{
-  startMusic();
-  document.getElementById("startOverlay").remove();
+function setMusicVolume(target){
+  target = Math.max(0, Math.min(1, target));
+  const step = target > music.volume ? 0.01 : -0.01;
+  const fade = setInterval(()=>{
+    const done = (step > 0 && music.volume >= target) || (step < 0 && music.volume <= target);
+    if (done) { music.volume = target; clearInterval(fade); return; }
+    music.volume = Math.max(0, Math.min(1, music.volume + step));
+  }, 120);
 }
 
-/* ===== GAME (simple + stable) ===== */
-const canvas=document.getElementById("game"),ctx=canvas.getContext("2d");
-let snake=[{x:8,y:8}],dir={x:1,y:0},heart={x:5,y:5},running=false;
+/* =========================
+   Modal (tap-heavy, controlled flow)
+   ========================= */
+const gameModal = $("gameModal");
+const modalTitle = $("modalTitle");
+const modalText  = $("modalText");
+const modalHint  = $("modalHint");
+const modalBig   = $("modalBig");
+const modalButtons = $("modalButtons");
+
+function showModal({title, text, hint="", bigText="", buttons=[]}){
+  modalTitle.textContent = title || "";
+  modalText.innerHTML = text || "";
+  modalHint.textContent = hint || "";
+  modalButtons.innerHTML = "";
+
+  if (bigText){
+    modalBig.classList.remove("hidden");
+    modalBig.textContent = bigText;
+  } else {
+    modalBig.classList.add("hidden");
+    modalBig.textContent = "";
+  }
+
+  buttons.forEach(b=>{
+    const btn = document.createElement("button");
+    btn.className = "btn";
+    btn.textContent = b.label;
+    btn.addEventListener("click", ()=>{
+      if (b.onClick) b.onClick();
+    });
+    modalButtons.appendChild(btn);
+  });
+
+  gameModal.classList.remove("hidden");
+}
+
+function hideModal(){
+  gameModal.classList.add("hidden");
+}
+
+/* =========================
+   Game Engine
+   ========================= */
+const canvas = $("game");
+const ctx = canvas.getContext("2d");
+
+const GRID = 16;
+const CELL = canvas.width / GRID;
+
+let running = false;
+let lastTick = 0;
+let tickMs = 220; // slower base (stage 1)
+
+let stage = 1; // 1,2,3
+let collected = 0;
+let target = 0;
+let bombsCount = 0;
+
+let worm = [];
+let dir = {x:1,y:0};
+let nextDir = {x:1,y:0};
+
+let heartPos = null;
+let flowerPos = null;
+let envelopePos = null;
+let bombs = [];
+
+const stageDesc = $("stageDesc");
+const collectedEl = $("collected");
+const targetEl = $("target");
+const statusPill = $("statusPill");
+const noteEl = $("note");
+const progressEl = $("progress");
+
+const pauseBtn = $("pauseBtn");
+const restartBtn = $("restartBtn");
+const continueBtn = $("continueBtn");
+
+function same(a,b){ return a && b && a.x===b.x && a.y===b.y; }
+function onWorm(p){ return worm.some(w => w.x===p.x && w.y===p.y); }
+
+function randCell(){
+  return { x: Math.floor(Math.random()*GRID), y: Math.floor(Math.random()*GRID) };
+}
+
+function spawnAvoid(avoid=[]){
+  let p, tries=0;
+  do{
+    p = randCell();
+    tries++;
+    if (tries > 900) break;
+  } while (onWorm(p) || avoid.some(x => same(x,p)));
+  return p;
+}
+
+function updateUI(){
+  collectedEl.textContent = collected;
+  targetEl.textContent = target;
+  statusPill.textContent = running ? "Running…" : "Paused";
+  const pct = target ? Math.min(100, (collected/target)*100) : 0;
+  progressEl.style.width = pct + "%";
+
+  if (stage === 1){
+    stageDesc.innerHTML = `Stage 1 — Eat <b>14</b> (❤️ + 🌸 both count) to grow, and avoid <b>7</b> bombs 💣.`;
+  } else if (stage === 2){
+    stageDesc.innerHTML = `Stage 2 — Harder. Eat <b>7</b> (❤️ + 🌸) and avoid <b>6</b> bombs 💣.`;
+  } else {
+    stageDesc.innerHTML = `Stage 3 — Peaceful. Eat the envelope <b>💌</b>. No danger.`;
+  }
+
+  // Continue button behavior (tap-heavy)
+  if (stage === 1 && collected >= target){
+    continueBtn.disabled = false;
+    continueBtn.style.opacity = "1";
+    continueBtn.style.cursor = "pointer";
+  } else if (stage === 2 && collected >= target){
+    continueBtn.disabled = false;
+    continueBtn.style.opacity = "1";
+    continueBtn.style.cursor = "pointer";
+  } else if (stage === 3 && envelopePos === null){ // after envelope eaten, we set envelopePos=null
+    continueBtn.disabled = true;
+    continueBtn.style.opacity = ".55";
+    continueBtn.style.cursor = "not-allowed";
+  } else {
+    continueBtn.disabled = true;
+    continueBtn.style.opacity = ".55";
+    continueBtn.style.cursor = "not-allowed";
+  }
+}
+
+function initStage(s){
+  stage = s;
+  running = false;
+  lastTick = 0;
+  dir = {x:1,y:0};
+  nextDir = {x:1,y:0};
+
+  worm = [{x:7,y:8},{x:6,y:8},{x:5,y:8}];
+  collected = 0;
+
+  if (stage === 1){
+    target = 14;
+    bombsCount = 7;
+    tickMs = 230; // slower romantic pace
+  } else if (stage === 2){
+    target = 7;
+    bombsCount = 6;
+    tickMs = 190; // slightly faster but still fair
+  } else {
+    target = 1; // envelope only (we won't use collected for it)
+    bombsCount = 0;
+    tickMs = 210;
+  }
+
+  heartPos = spawnAvoid([]);
+  flowerPos = spawnAvoid([heartPos]);
+  bombs = [];
+  envelopePos = null;
+
+  if (bombsCount > 0){
+    for (let i=0; i<bombsCount; i++){
+      bombs.push(spawnAvoid([heartPos, flowerPos, ...bombs]));
+    }
+  }
+
+  if (stage === 3){
+    // no heart/flower needed; place envelope
+    heartPos = null;
+    flowerPos = null;
+    envelopePos = spawnAvoid([]);
+  }
+
+  noteEl.textContent = stage === 3
+    ? "Swipe / arrows to reach the 💌."
+    : "Swipe / arrows. Eat ❤️ + 🌸 to grow. Avoid 💣.";
+
+  // music volume: game louder than poem
+  setMusicVolume(0.35);
+
+  pauseBtn.textContent = "Start";
+  updateUI();
+  draw();
+}
+
+/* Drawing */
+function drawEmoji(pos, emoji){
+  ctx.font = `${Math.floor(CELL*0.86)}px serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(emoji, pos.x*CELL + CELL/2, pos.y*CELL + CELL/2 + 1);
+}
 
 function draw(){
-  ctx.clearRect(0,0,480,480);
-  ctx.fillText("❤️",heart.x*30+6,heart.y*30+24);
-  snake.forEach((s,i)=>{
-    ctx.fillRect(s.x*30,s.y*30,30,30);
-    if(i===0)ctx.fillText("🪱",s.x*30+6,s.y*30+24);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // subtle checker
+  ctx.globalAlpha = 0.25;
+  for (let y=0;y<GRID;y++){
+    for (let x=0;x<GRID;x++){
+      const a = (x+y)%2===0;
+      ctx.fillStyle = a ? "rgba(0,0,0,0.58)" : "rgba(25,0,22,0.58)";
+      ctx.fillRect(x*CELL, y*CELL, CELL, CELL);
+    }
+  }
+  ctx.globalAlpha = 1;
+
+  // items
+  if (heartPos) drawEmoji(heartPos, "❤️");
+  if (flowerPos) drawEmoji(flowerPos, "🌸");
+  bombs.forEach(b => drawEmoji(b, "💣"));
+  if (envelopePos) drawEmoji(envelopePos, "💌");
+
+  // worm
+  worm.forEach((seg, i)=>{
+    ctx.fillStyle = i===0 ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.10)";
+    ctx.fillRect(seg.x*CELL, seg.y*CELL, CELL, CELL);
+    if (i===0) drawEmoji(seg, "🪱");
+  });
+}
+
+/* Mechanics */
+function setDir(d){
+  if (d==="up") nextDir = {x:0,y:-1};
+  if (d==="down") nextDir = {x:0,y:1};
+  if (d==="left") nextDir = {x:-1,y:0};
+  if (d==="right") nextDir = {x:1,y:0};
+}
+
+function gameOver(reason){
+  running = false;
+  pauseBtn.textContent = "Start";
+  safePlay(sndBomb);
+
+  showModal({
+    title: "Oops 💣",
+    text: reason,
+    hint: "Tap try again when you’re ready.",
+    buttons: [
+      { label: "Try again", onClick: ()=>{ hideModal(); initStage(stage); } }
+    ]
   });
 }
 
 function step(){
-  const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
-  if(h.x<0||h.y<0||h.x>15||h.y>15)return reset();
-  snake.unshift(h);
-  if(h.x===heart.x&&h.y===heart.y){
-    document.getElementById("sndHeart").play();
-    heart={x:Math.random()*16|0,y:Math.random()*16|0};
-  }else snake.pop();
+  // apply direction; prevent instant reverse
+  if (!(nextDir.x === -dir.x && nextDir.y === -dir.y)) dir = nextDir;
+
+  const head = worm[0];
+  const newHead = { x: head.x + dir.x, y: head.y + dir.y };
+
+  // wall
+  if (newHead.x < 0 || newHead.x >= GRID || newHead.y < 0 || newHead.y >= GRID){
+    return gameOver("You hit the wall 💥");
+  }
+
+  // self
+  if (worm.some((s,i)=> i!==0 && s.x===newHead.x && s.y===newHead.y)){
+    return gameOver("You bumped into yourself 😵");
+  }
+
+  // bomb collision
+  if (bombs.some(b => same(b,newHead))){
+    return gameOver("You ate a bomb 💣");
+  }
+
+  worm.unshift(newHead);
+
+  // Stage 3: envelope
+  if (stage === 3 && envelopePos && same(newHead, envelopePos)){
+    // envelope uses flower sound
+    safePlay(sndFlower);
+    if (navigator.vibrate) navigator.vibrate(20);
+
+    // freeze moment
+    running = false;
+    pauseBtn.textContent = "Start";
+    noteEl.textContent = "💌";
+    envelopePos = null; // mark eaten
+
+    // countdown modal (automatic after envelope, as requested)
+    startCountdownToFlowers();
+    return;
+  }
+
+  // Stage 1/2: hearts and flowers both count and grow
+  if (stage !== 3){
+    if (heartPos && same(newHead, heartPos)){
+      safePlay(sndHeart);
+      if (navigator.vibrate) navigator.vibrate(15);
+      collected++;
+      heartPos = spawnAvoid([flowerPos, ...bombs]);
+      updateUI();
+      // growth: no pop
+      if (collected >= target){
+        // unlock continue (no auto)
+        noteEl.textContent = "Completed ✅ Tap Continue when you want.";
+      }
+      return;
+    }
+
+    if (flowerPos && same(newHead, flowerPos)){
+      safePlay(sndFlower);
+      if (navigator.vibrate) navigator.vibrate(15);
+      collected++;
+      flowerPos = spawnAvoid([heartPos, ...bombs]);
+      updateUI();
+      if (collected >= target){
+        noteEl.textContent = "Completed ✅ Tap Continue when you want.";
+      }
+      return;
+    }
+  }
+
+  // normal move
+  worm.pop();
 }
 
-function loop(){
-  if(running){step();draw()}
-  setTimeout(loop,160);
+function loop(ts){
+  if (running && ts - lastTick > tickMs){
+    lastTick = ts;
+    step();
+    draw();
+  }
+  requestAnimationFrame(loop);
 }
 
-function reset(){
-  snake=[{x:8,y:8}];
-  running=false;
+/* =========================
+   Stage Flow (tap-driven)
+   ========================= */
+const gameView = $("gameView");
+const stage1WinView = $("stage1WinView");
+const stageSelectView = $("stageSelectView");
+const stage2WinView = $("stage2WinView");
+const flowersView = $("flowersView");
+const poemView = $("poemView");
+const finalView = $("finalView");
+
+function openStageInstructions(s){
+  const stageInfo = (s===1)
+    ? {
+        title: "Stage 1 💜",
+        text: `Goal: Eat <b>14</b> total. ❤️ and 🌸 both count and both make the worm grow.<br><br>Avoid <b>7</b> bombs 💣. If you hit one, you restart the stage.`,
+        hint: "Swipe (phone) or arrow keys (laptop). Tap Start when ready.",
+      }
+    : (s===2)
+    ? {
+        title: "Stage 2 💜 (Harder)",
+        text: `Goal: Eat <b>7</b> total. ❤️ and 🌸 both count and grow the worm.<br><br>Avoid <b>6</b> bombs 💣. If you hit one, you restart the stage.`,
+        hint: "Take your time. Tap Start when ready.",
+      }
+    : {
+        title: "Stage 3 💌",
+        text: `Final stage. No danger, no bombs.<br><br>Just guide the worm and eat the envelope 💌.`,
+        hint: "Tap Start when ready.",
+      };
+
+  showModal({
+    title: stageInfo.title,
+    text: stageInfo.text,
+    hint: stageInfo.hint,
+    buttons: [
+      { label: "I'm ready", onClick: ()=>{ hideModal(); } }
+    ]
+  });
 }
 
-document.getElementById("startBtn").onclick=()=>running=!running;
-document.getElementById("restartBtn").onclick=reset;
-document.addEventListener("keydown",e=>{
-  if(e.key==="ArrowUp")dir={x:0,y:-1};
-  if(e.key==="ArrowDown")dir={x:0,y:1};
-  if(e.key==="ArrowLeft")dir={x:-1,y:0};
-  if(e.key==="ArrowRight")dir={x:1,y:0};
+/* Continue button behavior */
+continueBtn.addEventListener("click", ()=>{
+  startMusic();
+
+  if (stage === 1 && collected >= target){
+    // go to stage1 win view (tap-driven)
+    running = false;
+    pauseBtn.textContent = "Start";
+    switchView(gameView, stage1WinView);
+  } else if (stage === 2 && collected >= target){
+    running = false;
+    pauseBtn.textContent = "Start";
+    switchView(gameView, stage2WinView);
+  }
 });
 
-/* ===== FLOW ===== */
-setTimeout(()=>{
-  document.getElementById("gameView").classList.add("hidden");
-  document.getElementById("transitionView").classList.remove("hidden");
-  setTimeout(()=>{
-    document.getElementById("transitionView").classList.add("hidden");
-    document.getElementById("poemView").classList.remove("hidden");
-    document.querySelectorAll(".line").forEach((l,i)=>{
-      setTimeout(()=>l.classList.add("show"),i*600);
+/* Stage 1 -> stage select */
+$("backToGame1Btn").addEventListener("click", ()=> switchView(stage1WinView, gameView));
+$("goStageSelectBtn").addEventListener("click", ()=> switchView(stage1WinView, stageSelectView));
+$("backToWinBtn").addEventListener("click", ()=> switchView(stageSelectView, stage1WinView));
+
+$("startStage2Btn").addEventListener("click", ()=>{
+  switchView(stageSelectView, gameView);
+  initStage(2);
+  openStageInstructions(2);
+});
+
+/* Stage 2 win -> stage 3 */
+$("backToStage2Btn").addEventListener("click", ()=> switchView(stage2WinView, gameView));
+$("startStage3Btn").addEventListener("click", ()=>{
+  switchView(stage2WinView, gameView);
+  initStage(3);
+  openStageInstructions(3);
+});
+
+/* Flowers -> poem */
+$("flowersContinueBtn").addEventListener("click", ()=>{
+  switchView(flowersView, poemView);
+  // soften music for poem
+  setMusicVolume(0.16);
+  startPoemReveal();
+  window.scrollTo({top:0, behavior:"instant"});
+});
+
+/* Poem nav */
+$("poemBackBtn").addEventListener("click", ()=>{
+  // back to flowers gif page
+  switchView(poemView, flowersView);
+  // slightly raise music for non-poem page
+  setMusicVolume(0.22);
+});
+$("poemContinueBtn").addEventListener("click", ()=>{
+  switchView(poemView, finalView);
+  setMusicVolume(0.18);
+});
+
+/* Final nav */
+$("finalBackBtn").addEventListener("click", ()=>{
+  switchView(finalView, poemView);
+  setMusicVolume(0.16);
+});
+$("finalRestartBtn").addEventListener("click", ()=>{
+  switchView(finalView, gameView);
+  initStage(1);
+  openStageInstructions(1);
+});
+
+/* Countdown -> Flowers */
+function startCountdownToFlowers(){
+  // 5-second countdown as requested (automatic)
+  let n = 5;
+  showModal({
+    title: "💜",
+    text: "Get ready…",
+    bigText: String(n),
+    hint: "Just a moment…",
+    buttons: []
+  });
+
+  const t = setInterval(()=>{
+    n--;
+    modalBig.textContent = String(n);
+    if (n <= 0){
+      clearInterval(t);
+      hideModal();
+      // after countdown show flowers gif page (tap to continue)
+      switchView(gameView, flowersView);
+    }
+  }, 1000);
+}
+
+/* =========================
+   Controls (keyboard + swipe)
+   ========================= */
+document.addEventListener("keydown", (e)=>{
+  startMusic();
+  if (e.key === "ArrowUp") setDir("up");
+  if (e.key === "ArrowDown") setDir("down");
+  if (e.key === "ArrowLeft") setDir("left");
+  if (e.key === "ArrowRight") setDir("right");
+  if (e.key === " ") toggleRun();
+});
+
+let touchStartX = 0, touchStartY = 0;
+canvas.addEventListener("touchstart", (e)=>{
+  startMusic();
+  const t = e.changedTouches[0];
+  touchStartX = t.clientX;
+  touchStartY = t.clientY;
+}, {passive:true});
+
+canvas.addEventListener("touchend", (e)=>{
+  startMusic();
+  const t = e.changedTouches[0];
+  const dx = t.clientX - touchStartX;
+  const dy = t.clientY - touchStartY;
+  const ax = Math.abs(dx), ay = Math.abs(dy);
+
+  const TH = 24; // swipe threshold
+  if (ax < TH && ay < TH) return;
+
+  if (ax > ay){
+    setDir(dx > 0 ? "right" : "left");
+  } else {
+    setDir(dy > 0 ? "down" : "up");
+  }
+}, {passive:true});
+
+/* Buttons */
+function toggleRun(){
+  running = !running;
+  pauseBtn.textContent = running ? "Pause" : "Start";
+  updateUI();
+}
+
+pauseBtn.addEventListener("click", ()=>{
+  startMusic();
+  toggleRun();
+});
+restartBtn.addEventListener("click", ()=>{
+  startMusic();
+  initStage(stage);
+  openStageInstructions(stage);
+});
+
+/* =========================
+   Poem reveal
+   ========================= */
+let poemObserver = null;
+function startPoemReveal(){
+  const lines = document.querySelectorAll(".line");
+  if (poemObserver) poemObserver.disconnect();
+
+  poemObserver = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting) e.target.classList.add("show");
     });
-    setTimeout(()=>{
-      document.getElementById("poemView").classList.add("hidden");
-      document.getElementById("finalView").classList.remove("hidden");
-    },10000);
-  },3000);
-},20000);
+  }, { threshold: 0.6 });
 
-draw(); loop();
+  lines.forEach(l=>poemObserver.observe(l));
+}
+
+/* =========================
+   Start flow
+   ========================= */
+$("beginBtn").addEventListener("click", ()=>{
+  startMusic();
+  $("startOverlay").classList.add("hidden");
+  initStage(1);
+  openStageInstructions(1);
+});
+
+/* Ensure initial state */
+initStage(1);
+requestAnimationFrame(loop);
 </script>
-
 </body>
 </html>
