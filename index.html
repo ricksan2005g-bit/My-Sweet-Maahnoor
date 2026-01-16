@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Feed The Worm Noory 💜</title>
+
+<style>
+:root{
+  --deep1:#070010;
+  --deep2:#220022;
+  --deep3:#3a0032;
+  --deep4:#001b3a;
+  --rose:#ff74b8;
+  --lav:#a78bff;
+  --blue:#78b3ff;
+  --text:#ffd9eb;
+  --muted:#f2a7c4;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+  font-family: Georgia, serif;
+  background:#000;
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* ===== BACKGROUND ===== */
+.bg{
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255,116,184,.18), transparent 45%),
+    radial-gradient(circle at 80% 75%, rgba(167,139,255,.16), transparent 45%),
+    radial-gradient(circle at 55% 35%, rgba(120,179,255,.12), transparent 50%),
+    conic-gradient(from 180deg, rgba(255,116,184,.14), rgba(120,179,255,.10), rgba(167,139,255,.12), rgba(255,116,184,.14)),
+    linear-gradient(135deg, var(--deep3), var(--deep1), var(--deep4));
+  background-size: 170% 170%;
+  animation: breathe 18s ease-in-out infinite;
+}
+
+@keyframes breathe{
+  0%{background-position:10% 20%}
+  50%{background-position:90% 80%}
+  100%{background-position:10% 20%}
+}
+
+/* ===== OVERLAY ===== */
+#startOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+#startOverlay div{
+  padding:22px 30px;
+  border-radius:20px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(12px);
+  font-size:1.2rem;
+}
+
+/* ===== VIEWS ===== */
+.view{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:24px;
+}
+.hidden{display:none}
+
+.fadeIn{animation:fadeIn .6s ease both}
+.fadeOut{animation:fadeOut .6s ease both}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(.97); filter:blur(6px)}
+  to{opacity:1; transform:none; filter:none}
+}
+@keyframes fadeOut{
+  from{opacity:1}
+  to{opacity:0; transform:scale(.98); filter:blur(6px)}
+}
+
+/* ===== GAME ===== */
+.card{
+  width:min(580px,100%);
+  background:rgba(255,255,255,.08);
+  border-radius:22px;
+  padding:16px;
+  backdrop-filter:blur(14px);
+}
+
+canvas{
+  width:100%;
+  background:rgba(0,0,0,.35);
+  border-radius:16px;
+  margin-top:12px;
+}
+
+.controls{
+  display:flex;
+  justify-content:space-between;
+  margin-top:12px;
+}
+
+button{
+  padding:10px 16px;
+  border-radius:14px;
+  border:none;
+  background:rgba(255,255,255,.15);
+  color:var(--text);
+  font-size:1rem;
+}
+
+/* ===== TRANSITION ===== */
+.center{
+  text-align:center;
+}
+.center h1{
+  font-size:3rem;
+}
+
+/* ===== POEM ===== */
+.poem h1{
+  margin-bottom:40px;
+}
+.line{
+  opacity:0;
+  transform:translateY(24px);
+  transition:1.3s;
+  margin:18px 0;
+  font-size:1.4rem;
+}
+.line.show{
+  opacity:1;
+  transform:none;
+}
+
+/* ===== FINAL ===== */
+.forever{
+  animation:forever 9s ease-in-out infinite;
+}
+@keyframes forever{
+  0%{text-shadow:0 0 20px rgba(255,116,184,.2)}
+  50%{text-shadow:0 0 45px rgba(167,139,255,.3)}
+  100%{text-shadow:0 0 20px rgba(255,116,184,.2)}
+}
+</style>
+</head>
+
+<body class="bg">
+
+<!-- AUDIO -->
+<audio id="music" src="music.mp3" loop></audio>
+<audio id="sndHeart" src="heart.mp3"></audio>
+<audio id="sndFlower" src="flower.mp3"></audio>
+<audio id="sndBomb" src="bomb.mp3"></audio>
+
+<!-- START OVERLAY -->
+<div id="startOverlay"><div>tap anywhere to begin 💜</div></div>
+
+<!-- GAME -->
+<section id="gameView" class="view">
+  <div class="card">
+    <h2>Feed The Worm Noory 🪱💜</h2>
+    <canvas id="game" width="480" height="480"></canvas>
+    <div class="controls">
+      <button id="startBtn">Start</button>
+      <button id="restartBtn">Restart</button>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSITION -->
+<section id="transitionView" class="view hidden">
+  <div class="center fadeIn">
+    <h1>I love you Noory<br>Mwahhh 💋</h1>
+  </div>
+</section>
+
+<!-- POEM -->
+<section id="poemView" class="view hidden">
+  <div class="poem">
+    <h1>My Rose</h1>
+    <div class="line">I pick you from the fields, I smell you and I smile.</div>
+    <div class="line">Your scent is awakening and strong, and it never ceases to make me smile.</div>
+    <div class="line">I love the thorn that adorns your stem.</div>
+    <div class="line">The deep red that radiates deeply from your petals.</div>
+    <div class="line">You are a smooth rose that I keep safe, watered, and cherished.</div>
+    <div class="line">I love you more than anything.</div>
+    <div class="line">I will care for you and watch you grow.</div>
+    <div class="line">Your mighty beauty is all I ever want to know and all I admire, more than the rarest treasures and gold.</div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section id="finalView" class="view hidden">
+  <div class="center">
+    <h1 class="forever">❤️Maahnoor❤️Gavin❤️forever❤️</h1>
+  </div>
+</section>
+
+<script>
+/* ===== AUDIO ===== */
+const music=document.getElementById("music");
+let musicStarted=false;
+function startMusic(){
+  if(musicStarted)return;
+  musicStarted=true;
+  music.volume=0;
+  music.play();
+  let f=setInterval(()=>{music.volume+=.02;if(music.volume>=.35)clearInterval(f)},200);
+}
+
+/* ===== OVERLAY ===== */
+document.getElementById("startOverlay").onclick=()=>{
+  startMusic();
+  document.getElementById("startOverlay").remove();
+}
+
+/* ===== GAME (simple + stable) ===== */
+const canvas=document.getElementById("game"),ctx=canvas.getContext("2d");
+let snake=[{x:8,y:8}],dir={x:1,y:0},heart={x:5,y:5},running=false;
+
+function draw(){
+  ctx.clearRect(0,0,480,480);
+  ctx.fillText("❤️",heart.x*30+6,heart.y*30+24);
+  snake.forEach((s,i)=>{
+    ctx.fillRect(s.x*30,s.y*30,30,30);
+    if(i===0)ctx.fillText("🪱",s.x*30+6,s.y*30+24);
+  });
+}
+
+function step(){
+  const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+  if(h.x<0||h.y<0||h.x>15||h.y>15)return reset();
+  snake.unshift(h);
+  if(h.x===heart.x&&h.y===heart.y){
+    document.getElementById("sndHeart").play();
+    heart={x:Math.random()*16|0,y:Math.random()*16|0};
+  }else snake.pop();
+}
+
+function loop(){
+  if(running){step();draw()}
+  setTimeout(loop,160);
+}
+
+function reset(){
+  snake=[{x:8,y:8}];
+  running=false;
+}
+
+document.getElementById("startBtn").onclick=()=>running=!running;
+document.getElementById("restartBtn").onclick=reset;
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowUp")dir={x:0,y:-1};
+  if(e.key==="ArrowDown")dir={x:0,y:1};
+  if(e.key==="ArrowLeft")dir={x:-1,y:0};
+  if(e.key==="ArrowRight")dir={x:1,y:0};
+});
+
+/* ===== FLOW ===== */
+setTimeout(()=>{
+  document.getElementById("gameView").classList.add("hidden");
+  document.getElementById("transitionView").classList.remove("hidden");
+  setTimeout(()=>{
+    document.getElementById("transitionView").classList.add("hidden");
+    document.getElementById("poemView").classList.remove("hidden");
+    document.querySelectorAll(".line").forEach((l,i)=>{
+      setTimeout(()=>l.classList.add("show"),i*600);
+    });
+    setTimeout(()=>{
+      document.getElementById("poemView").classList.add("hidden");
+      document.getElementById("finalView").classList.remove("hidden");
+    },10000);
+  },3000);
+},20000);
+
+draw(); loop();
+</script>
+
+</body>
+</html>
